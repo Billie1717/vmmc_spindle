@@ -1,0 +1,8 @@
+23-01-23
+
+The current code works:
+
+$ make OPTFLAGS=-DISOTROPIC build
+$ g++ -std=c++11 demos/cos_squarium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/lib/ -lvmmc -v
+$ ./demos/cos_squarium
+

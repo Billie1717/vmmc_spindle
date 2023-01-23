@@ -1,0 +1,61 @@
+in vmmc-master directory
+run ~/$ make clean
+then run 
+
+~/$ make OPTFLAGS=-DISOTROPIC build 
+
+#this is because we are only interested in isotropic interactions, so we only need to build the isotropic version of vmmc
+
+
+
+This will give some errors for the files in 'python' folder, and an error for patchy_disc.cpp but that doesn't matter
+the to run a specific simulation:
+~/$ g++ -std=c++11 demos/square_wellium_wall.cpp -I/Users/billie/Documents/PHD/CytoDiv/VMMC/vmmc-master/src -L/Users/billie/Documents/PHD/CytoDiv/VMMC/vmmc-master/lib/ -lvmmc -v
+
+
+compile with:
+
+
+~/$ g++ -std=c++11 demos/cos_squarium.cpp -I/Users/billie/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/src -L/Users/billie/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/lib/ -lvmmc -v
+
+g++ -std=c++11 demos/cos_squarium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/lib/ -lvmmc -v
+
+g++ -std=c++11 demos/spindle.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-spindle/lib/ -lvmmc -v
+
+g++ -std=c++11 demos/square_wellium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/lib/ -lvmmc -v
+
+g++ -std=c++11 demos/cos_squarium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc-master/lib/ -lvmmc -v
+
+
+
+THere will be an error
+
+Then run with $ ./demos/cos_squarium 
+./demos/spindle
+
+
+sweeps = 1.0000e+03, energy = -4.8854
+sweeps = 2.0000e+03, energy = -6.0116
+sweeps = 3.0000e+03, energy = -7.0501
+sweeps = 4.0000e+03, energy = -7.9122
+sweeps = 5.0000e+03, energy = -8.5806
+sweeps = 6.0000e+03, energy = -9.3014
+sweeps = 7.0000e+03, energy = -9.8037
+sweeps = 8.0000e+03, energy = -10.3521
+sweeps = 9.0000e+03, energy = -10.8569
+sweeps = 1.0000e+04, energy = -11.2993
+sweeps = 1.1000e+04, energy = -11.6108
+sweeps = 1.2000e+04, energy = -11.9646
+
+sweeps = 1.0000e+03, energy = -4.6753
+sweeps = 2.0000e+03, energy = -5.9646
+sweeps = 3.0000e+03, energy = -6.9526
+sweeps = 4.0000e+03, energy = -7.8130
+sweeps = 5.0000e+03, energy = -8.4337
+sweeps = 6.0000e+03, energy = -9.0714
+sweeps = 7.0000e+03, energy = -9.7651
+sweeps = 8.0000e+03, energy = -10.2548
+sweeps = 9.0000e+03, energy = -10.6017
+sweeps = 1.0000e+04, energy = -10.9575
+sweeps = 1.1000e+04, energy = -11.2392
+sweeps = 1.2000e+04, energy = -11.4814

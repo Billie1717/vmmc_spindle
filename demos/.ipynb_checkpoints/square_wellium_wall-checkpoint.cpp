@@ -31,7 +31,9 @@ int main(int argc, char** argv)
 {
     // Simulation parameters.
     unsigned int dimension = 3;                     // dimension of simulation box
-    unsigned int nParticles = 1000;                 // number of particles
+    unsigned int nParticles = 500;                 // number of potential particles (capacity)
+    unsigned int nParticles_a = 400;                 // number of active particles
+    unsigned int nParticles_in = nParticles-nParticles_a;    // number of inactive particles
     double interactionEnergy = 2.3;                 // pair interaction energy scale (in units of kBT)
     double interactionRange = 1.1;                  // size of interaction range (in units of particle diameter)
     double wallInteractionEnergy = 3.5;             // particle-wall interaction energy scale (in units of kBT)
@@ -86,7 +88,7 @@ int main(int argc, char** argv)
     Initialise initialise;
 
     // Generate a random particle configuration.
-    initialise.random(particles, cells, box, rng, false);
+    initialise.random(particles, cells, box, rng, false,nParticles_a);
 
     // Initialise data structures needed by the VMMC class.
     double coordinates[dimension*nParticles];

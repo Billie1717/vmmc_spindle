@@ -348,6 +348,9 @@ namespace vmmc
     {
         // Choose a seed particle.
         moveParams.seed = rng.integer(0, nParticles-1);
+        
+        while (particles[moveParams.seed].preMoveType ==0){
+            moveParams.seed = rng.integer(0, nParticles-1);} //Choose another seed if seed is a dead particle
 
         // Get a uniform random number in range [0-1].
         double r = rng();

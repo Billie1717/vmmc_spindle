@@ -6,3 +6,4 @@ $ make OPTFLAGS=-DISOTROPIC build
 $ g++ -std=c++11 demos/cos_squarium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc_spindle/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc_spindle/lib/ -lvmmc -v
 $ ./demos/cos_squarium
 
+g++ -g -std=c++11 demos/cos_squarium.cpp -I/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc_spindle/src -L/Users/billiemeadowcroft/Documents/PHD/CytoDiv/VMMC/vmmc_spindle/lib/ -lvmmc -v

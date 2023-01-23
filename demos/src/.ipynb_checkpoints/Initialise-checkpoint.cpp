@@ -28,8 +28,9 @@ Initialise::Initialise()
 {
 }
 
-void Initialise::random(std::vector<Particle>& particles, CellList& cells, Box& box, MersenneTwister& rng, bool isSpherocylinder)
+void Initialise::random(std::vector<Particle>& particles, CellList& cells, Box& box, MersenneTwister& rng, bool isSpherocylinder, int Nactive)
 {
+    
     if (isSpherocylinder && (box.dimension != 3))
     {
         std::cerr << "[ERROR] Initialise: Spherocylindrical boundary only valid for three dimensional simulation box!\n";
@@ -39,7 +40,7 @@ void Initialise::random(std::vector<Particle>& particles, CellList& cells, Box& 
     // Copy box dimensions.
     boxSize = box.boxSize;
 
-    for (unsigned i=0;i<particles.size();i++)
+    for (unsigned i=0;i<Nactive;i++)
     {
         // Current number of attempted particle insertions.
         unsigned int nTrials = 0;
@@ -52,8 +53,7 @@ void Initialise::random(std::vector<Particle>& particles, CellList& cells, Box& 
 
         // Set particle index.
         particles[i].index = i;
-        particles[i].type = 0;
-        if (i<=(int)(particles.size()/2)){particles[i].type = 1;}
+        particles[i].type = 1;
 
         // Keep trying to insert particle until there is no overlap.
         while (isOverlap)
@@ -117,6 +117,72 @@ void Initialise::random(std::vector<Particle>& particles, CellList& cells, Box& 
         // Update cell list.
         cells.initCell(particles[i].cell, particles[i]);
     }
+    
+    for (unsigned ii=0;ii<(int)(particles.size()-Nactive);ii++)
+    {
+        unsigned int i = 0;
+        i = ii+Nactive;
+                // Current number of attempted particle insertions.
+        unsigned int nTrials = 0;
+
+        // Whether particle overlaps.
+        bool isOverlap = true;
+
+        // Temporary vector.
+        std::vector<double> vec(box.dimension);
+
+        // Set particle index.
+        particles[i].index = i;
+        particles[i].type = 0;
+
+        // Keep trying to insert particle until there is no overlap.
+        while (isOverlap)
+        {
+            nTrials++;
+
+            // Generate a random position.
+            for (unsigned int j=0;j<box.dimension;j++)
+                vec[j] = 2; //rng()*box.boxSize[j];
+
+            particles[i].position = vec;
+
+            // Generate a random orientation.
+            for (unsigned int j=0;j<box.dimension;j++)
+                vec[j] = rng.normal();
+
+            // Calculate vector norm.
+            double norm = 0;
+            for (unsigned int j=0;j<box.dimension;j++)
+                norm += vec[j]*vec[j];
+            norm = sqrt(norm);
+
+            // Convert orientation to a unit vector.
+            for (unsigned int j=0;j<box.dimension;j++)
+                vec[j] /= norm;
+
+            particles[i].orientation = vec;
+
+            // Calculate the particle's cell index.
+            particles[i].cell = cells.getCell(particles[i]);
+            //printf("cells.getCell(particles[i]: %d",particles[i].cell);
+            // Enforce spherocylindrical boundary.
+            
+            
+            isOverlap = checkOverlap(particles[i], particles, cells, box);
+            
+
+            // Check trial limit isn't exceeded.
+            if (nTrials == MAX_TRIALS)
+            {
+                std::cerr << "[ERROR] Initialise: Maximum number of trial insertions reached.\n";
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        // Update cell list.
+        cells.initCell(particles[i].cell, particles[i]);
+    }
+    
 }
 
 #ifndef ISOTROPIC
@@ -206,7 +272,7 @@ bool Initialise::checkOverlap(Particle& particle, std::vector<Particle>& particl
             neighbour = cells[cell].particles[j];
 
             // Make sure particles are different.
-            if (neighbour != particle.index)
+            if (neighbour != particle.index && particle.type !=0)
             {
                 // Particle separtion vector.
                 std::vector<double> sep(box.dimension);

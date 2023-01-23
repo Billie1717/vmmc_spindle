@@ -235,7 +235,7 @@ void CellList::initCell(int newCell, Particle& particle)
     particle.posCell = at(newCell).tally;
     at(newCell).tally++;
 
-    if (at(newCell).tally == maxParticles)
+    if (at(newCell).tally == maxParticles && particle.cell !=0 )
     {
         std::cerr << "[ERROR] CellList: Maximum number of particles per cell exceeded!\n";
         exit(EXIT_FAILURE);

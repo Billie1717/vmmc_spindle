@@ -60,7 +60,7 @@ double CosSquared::computePairEnergy(const unsigned int particle1,
 
     // Particles interact.
     
-    if (normSqd < 1)
+    if (normSqd < 1 && type1!=0 && type2!=0 )
     
     {
         double r2Inv = 1.0 / normSqd;
@@ -68,26 +68,26 @@ double CosSquared::computePairEnergy(const unsigned int particle1,
         return interactionEnergy*((r6Inv*r6Inv) - 2*r6Inv + 1);
     }
     
-    if (normSqd < squaredCutOffDistance && (type1 == type2) && type1 == 0){
-        double r = sqrt(normSqd);
-        //eps_fp*cos(M_PI*(r-sigma_fp)/(2*(interactionRange_-sigma_fp)))*cos(M_PI*(r-sigma_fp)/(2*(rcut_fp-sigma_fp)));
-        double cosineterm = cos(M_PI*(r-1)/(2*(interactionRange-1))); //for now just assigned sigma = 1 rather than calling sigma
-        return -interactionEnergy*cosineterm*cosineterm;
-    }
-    
     if (normSqd < squaredCutOffDistance && (type1 == type2) && type1 == 1){
         double r = sqrt(normSqd);
         //eps_fp*cos(M_PI*(r-sigma_fp)/(2*(interactionRange_-sigma_fp)))*cos(M_PI*(r-sigma_fp)/(2*(rcut_fp-sigma_fp)));
         double cosineterm = cos(M_PI*(r-1)/(2*(interactionRange-1))); //for now just assigned sigma = 1 rather than calling sigma
-        return -5*interactionEnergy*cosineterm*cosineterm;
+        return -interactionEnergy*cosineterm*cosineterm;
     }
     
-    if (normSqd < squaredCutOffDistance*2 && (type1 != type2)){
+    /*if (normSqd < squaredCutOffDistance && (type1 == type2) && type1 == 1){
+        double r = sqrt(normSqd);
+        //eps_fp*cos(M_PI*(r-sigma_fp)/(2*(interactionRange_-sigma_fp)))*cos(M_PI*(r-sigma_fp)/(2*(rcut_fp-sigma_fp)));
+        double cosineterm = cos(M_PI*(r-1)/(2*(interactionRange-1))); //for now just assigned sigma = 1 rather than calling sigma
+        return -5*interactionEnergy*cosineterm*cosineterm;
+    }*/
+    
+   /* if (normSqd < squaredCutOffDistance*2 && (type1 != type2)){
         double r = sqrt(normSqd);
         //eps_fp*cos(M_PI*(r-sigma_fp)/(2*(interactionRange_-sigma_fp)))*cos(M_PI*(r-sigma_fp)/(2*(rcut_fp-sigma_fp)));
         double cosineterm = cos(M_PI*(r-1)/(2*(interactionRange-1))); //for now just assigned sigma = 1 rather than calling sigma
         return -interactionEnergy*cosineterm*cosineterm;
-    }
+    }*/
     
     
     
